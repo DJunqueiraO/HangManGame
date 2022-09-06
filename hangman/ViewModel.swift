@@ -14,7 +14,7 @@ class ViewModel {
     
     private func validateName(_ name: String) -> Bool {
         
-        let nameRegEx = "^[a-zA-Zá-üÁ-Ü]{2,8}+(([',. -][a-zA-Zá-üÁ-Ü])?[a-zA-Zá-üÁ-Ü]*)*$"
+        let nameRegEx = "^[a-zA-Zá-üÁ-Ü]{2,8}+(([a-zA-Zá-üÁ-Ü])?[a-zA-Zá-üÁ-Ü]*)*$"
 
         let namePred = NSPredicate(format:"SELF MATCHES %@", nameRegEx)
         
@@ -25,7 +25,7 @@ class ViewModel {
         return false
     }
     
-    private func splitWords(_ advice: String) -> [String] {
+    func splitWords(_ advice: String) -> [String] {
         
         var words: [String] = []
         
@@ -35,7 +35,7 @@ class ViewModel {
             
             if char == " " {
                 
-                if validateName(word) && word != "don\\'t" && word.count > 1 {words.append(word)}
+                if validateName(word) && word != "don\\'t" && word.count > 2 {words.append(word)}
                 word = ""
                 continue
             }
@@ -73,7 +73,7 @@ class ViewModel {
             }
         }
         
-        if sender.text == "\(TargetText)" || sender.text == "\(TargetText.uppercased())" {
+        if sender.text == "\(TargetText.lowercased())" || sender.text == "\(TargetText.uppercased())" {
             
             sender.isEnabled = false
             hitWord = true

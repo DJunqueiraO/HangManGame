@@ -100,7 +100,6 @@ class View: UIViewController {
         sessionmanager.APIFullRequest{response in
             
             self.hangmanStackView.addArrangedSubviews(self.viewModel.createTextFields(response.slip.advice))
-            print(self.viewModel.gameWord)
         }
         
         super.viewDidLoad()
@@ -142,6 +141,8 @@ extension View: ViewModelDelegate {
     }
     
     func youLose() {
+        
+        view.endEditing(true)
         
         UIView.animate(withDuration: 0.3,
                        delay: 0.1) {
