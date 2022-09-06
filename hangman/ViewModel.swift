@@ -109,7 +109,7 @@ class ViewModel {
             default:
             
                 imageView.image = App.Images.game
-                delegate?.freezeStackView()
+                delegate?.youLose()
         }
     }
         
@@ -154,5 +154,5 @@ protocol ViewModelDelegate {
     
     func setHangmanImage()
     
-    func freezeStackView()
+    func youLose()
 }

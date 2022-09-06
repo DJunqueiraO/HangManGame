@@ -65,10 +65,36 @@ class View: UIViewController {
         
         return viewModel
     }()
+    
+    private lazy var youLoseImageView: UIImageView = {
+        
+        let youLoseImageView = UIImageView()
+        youLoseImageView.image = App.Images.skull
+        youLoseImageView.contentMode = .scaleAspectFit
+        youLoseImageView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        youLoseImageView.alpha = 0
+        
+        let youLoseLabel = UILabel()
+        
+        let text = "You Lose"
+        
+        let attributes = [AttributedRange(attributes: [.font: App.font as Any,
+                                                       .foregroundColor: UIColor.white],
+                                          range: text)]
+        
+        youLoseLabel.addAttributedText(text: text, attributes)
+        
+        youLoseImageView.addSubview(youLoseLabel)
+        
+        youLoseLabel.constraint(to: youLoseImageView, by: [.centerX])
+        youLoseLabel.constraint(to: youLoseImageView, by: [.centerY], view.frame.size.height*0.25)
+        
+        return youLoseImageView
+    }()
 
     override func viewDidLoad() {
         
-        view.addSubviews([hangmanImage, hangmanStackView, gameTitleLabel, chooseALetter])
+        view.addSubviews([hangmanImage, hangmanStackView, gameTitleLabel, chooseALetter, youLoseImageView])
         view.backgroundColor = App.green
         
         sessionmanager.APIFullRequest{response in
@@ -88,6 +114,8 @@ class View: UIViewController {
         hangmanStackView.constraint(to: hangmanImage, by: [.centerY], view.frame.size.height*0.15)
         
         chooseALetter.constraint(to: hangmanImage, by: [.centerX, .bottom])
+        
+        youLoseImageView.constraint(to: view, by: [.top, .leading, .trailing, .bottom])
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -113,8 +141,12 @@ extension View: ViewModelDelegate {
         viewModel.updateRangmanImage(hangmanImage)
     }
     
-    func freezeStackView() {
+    func youLose() {
         
-        hangmanStackView.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.3,
+                       delay: 0.1) {
+            
+            self.youLoseImageView.alpha = 1
+        }
     }
 }

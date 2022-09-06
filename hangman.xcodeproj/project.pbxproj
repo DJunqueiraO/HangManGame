@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		141AFDA928C766B0006C5605 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141AFDA828C766B0006C5605 /* UILabelExtension.swift */; };
+		14ED190B28C7F533001CD3C0 /* OrientationEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED190A28C7F533001CD3C0 /* OrientationEnum.swift */; };
 		14FDD06528C6A061000D4E8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FDD06428C6A061000D4E8F /* AppDelegate.swift */; };
 		14FDD06728C6A061000D4E8F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FDD06628C6A061000D4E8F /* SceneDelegate.swift */; };
 		14FDD06928C6A061000D4E8F /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FDD06828C6A061000D4E8F /* View.swift */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		141AFDA828C766B0006C5605 /* UILabelExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
+		14ED190A28C7F533001CD3C0 /* OrientationEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationEnum.swift; sourceTree = "<group>"; };
 		14FDD06128C6A061000D4E8F /* hangman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hangman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14FDD06428C6A061000D4E8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14FDD06628C6A061000D4E8F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				14FDD06D28C6A063000D4E8F /* Assets.xcassets */,
 				14FDD07A28C6A295000D4E8F /* AssetsStructs.swift */,
+				14ED190A28C7F533001CD3C0 /* OrientationEnum.swift */,
 				14FDD07E28C6A552000D4E8F /* UIViewExtension.swift */,
 				14FDD08728C6C377000D4E8F /* UIStackViewExtension.swift */,
 				14FDD08528C6AE78000D4E8F /* UITextFieldExtension.swift */,
@@ -187,6 +190,7 @@
 				14FDD07D28C6A50E000D4E8F /* ViewModel.swift in Sources */,
 				14FDD06928C6A061000D4E8F /* View.swift in Sources */,
 				14FDD06528C6A061000D4E8F /* AppDelegate.swift in Sources */,
+				14ED190B28C7F533001CD3C0 /* OrientationEnum.swift in Sources */,
 				14FDD08428C6A8B2000D4E8F /* APIModel.swift in Sources */,
 				14FDD06728C6A061000D4E8F /* SceneDelegate.swift in Sources */,
 				14FDD07B28C6A295000D4E8F /* AssetsStructs.swift in Sources */,
