@@ -97,35 +97,7 @@ class View: UIViewController {
     
     @objc func textFieldsTarget(_ sender: UITextField) {
         
-        let TargetText = viewModel.gameWord[viewModel.gameWord.index(viewModel.gameWord.startIndex,
-                                                                     offsetBy: sender.tag)]
-        
-        var hitWord = false
-        
-        for i in 0...viewModel.gameWord.count-1 {
-
-            let TargetText = viewModel.gameWord[viewModel.gameWord.index(viewModel.gameWord.startIndex,
-                                                                         offsetBy: i)]
-            if sender.text == "\(TargetText)" || sender.text == "\(TargetText.uppercased())" {
-
-                guard let textField = hangmanStackView.arrangedSubviews[i] as? UITextField else {return}
-                textField.text = sender.text
-                textField.isEnabled = false
-                hitWord = true
-            }
-        }
-        
-        if sender.text == "\(TargetText)" || sender.text == "\(TargetText.uppercased())" {
-            
-            sender.isEnabled = false
-            hitWord = true
-            return
-        }
-        if !hitWord {
-            
-            viewModel.updateRangmanImage(hangmanImage)
-        }
-        sender.text = ""
+        viewModel.verifyTextField(sender)
     }
 }
 
@@ -134,5 +106,10 @@ extension View: ViewModelDelegate {
     func setTxtFieldsTarget(_ textField: UITextField) {
         
         textField.addTarget(self, action: #selector(textFieldsTarget), for: .editingChanged)
+    }
+    
+    func setHangmanImage() {
+        
+        viewModel.updateRangmanImage(hangmanImage)
     }
 }
