@@ -112,4 +112,9 @@ extension View: ViewModelDelegate {
         
         viewModel.updateRangmanImage(hangmanImage)
     }
+    
+    func freezeStackView() {
+        
+        hangmanStackView.isUserInteractionEnabled = false
+    }
 }

@@ -109,6 +109,7 @@ class ViewModel {
             default:
             
                 imageView.image = App.Images.game
+                delegate?.freezeStackView()
         }
     }
         
@@ -152,4 +153,6 @@ protocol ViewModelDelegate {
     func setTxtFieldsTarget(_ textField: UITextField)
     
     func setHangmanImage()
+    
+    func freezeStackView()
 }
