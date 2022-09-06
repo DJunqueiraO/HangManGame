@@ -53,6 +53,39 @@ class ViewModel {
         gameWord = words[randomWordIndex]
     }
     
+    func verifyTextField(_ sender: UITextField) {
+        
+        let TargetText = gameWord[gameWord.index(gameWord.startIndex, offsetBy: sender.tag)]
+        
+        var hitWord = false
+        
+        for i in 0...gameWord.count-1 {
+
+            let TargetText = gameWord[gameWord.index(gameWord.startIndex, offsetBy: i)]
+            if sender.text == "\(TargetText)" || sender.text == "\(TargetText.uppercased())" {
+                
+                guard let hangmanStackView = sender.superview as? UIStackView,
+                      let textField = hangmanStackView.arrangedSubviews[i] as? UITextField else {return}
+                
+                textField.text = sender.text
+                textField.isEnabled = false
+                hitWord = true
+            }
+        }
+        
+        if sender.text == "\(TargetText)" || sender.text == "\(TargetText.uppercased())" {
+            
+            sender.isEnabled = false
+            hitWord = true
+            return
+        }
+        if !hitWord {
+            
+            delegate?.setHangmanImage()
+        }
+        sender.text = ""
+    }
+    
     func updateRangmanImage(_ imageView: UIImageView) {
         
         switch imageView.image {
@@ -76,6 +109,7 @@ class ViewModel {
             default:
             
                 imageView.image = App.Images.game
+                delegate?.freezeStackView()
         }
     }
         
@@ -117,4 +151,8 @@ class ViewModel {
 protocol ViewModelDelegate {
     
     func setTxtFieldsTarget(_ textField: UITextField)
+    
+    func setHangmanImage()
+    
+    func freezeStackView()
 }
