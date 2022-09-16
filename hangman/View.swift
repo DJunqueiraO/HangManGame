@@ -34,6 +34,15 @@ class View: UIViewController {
         return gameTitleLabel
     }()
     
+    private let adviceLabel: UILabel = {
+        
+        let adviceLabel = UILabel()
+        adviceLabel.font = App.font
+        adviceLabel.textColor = .white
+        
+        return adviceLabel
+    }()
+    
     private let chooseALetter: UILabel = {
         
         let chooseALetter = UILabel()
@@ -94,12 +103,13 @@ class View: UIViewController {
 
     override func viewDidLoad() {
         
-        view.addSubviews([hangmanImage, hangmanStackView, gameTitleLabel, chooseALetter, youLoseImageView])
+        view.addSubviews([hangmanImage, hangmanStackView, adviceLabel, gameTitleLabel, chooseALetter, youLoseImageView])
         view.backgroundColor = App.green
         
         sessionmanager.APIFullRequest{response in
             
             self.hangmanStackView.addArrangedSubviews(self.viewModel.createTextFields(response.slip.advice))
+            self.adviceLabel.text = self.viewModel.advice
         }
         
         super.viewDidLoad()
@@ -111,6 +121,9 @@ class View: UIViewController {
         
         hangmanStackView.constraint(to: hangmanImage, by: [.centerX], view.frame.size.width*0.1)
         hangmanStackView.constraint(to: hangmanImage, by: [.centerY], view.frame.size.height*0.15)
+        
+        adviceLabel.constraint(to: chooseALetter, with: [.bottom:.top])
+        adviceLabel.constraint(to: chooseALetter, by: [.centerX])
         
         chooseALetter.constraint(to: hangmanImage, by: [.centerX, .bottom])
         

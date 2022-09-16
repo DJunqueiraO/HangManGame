@@ -11,6 +11,7 @@ class ViewModel {
     
     var delegate: ViewModelDelegate?
     var gameWord = ""
+    var advice: String = ""
     
     private func validateName(_ name: String) -> Bool {
         
@@ -28,7 +29,6 @@ class ViewModel {
     func splitWords(_ advice: String) -> [String] {
         
         var words: [String] = []
-        
         var word: String = ""
         
         for char in advice {
@@ -41,13 +41,27 @@ class ViewModel {
             }
             word.append(char)
         }
+        words.append(word)
         
         return words
     }
     
-    private func memorizeTheWord(_ word: String) {
+    private func memorizeAdvice(_ words: [String]) {
         
-        let words = splitWords(word)
+        for word in words {
+            
+            if word == gameWord {
+                
+                self.advice.append("? ")
+                
+                continue
+            }
+            self.advice.append(word + " ")
+        }
+    }
+    
+    private func memorizeTheWord(_ words: [String]) {
+        
         let randomWordIndex = Int.random(in: 0...words.count-1)
         
         gameWord = words[randomWordIndex]
@@ -113,9 +127,12 @@ class ViewModel {
         }
     }
         
-    func createTextFields(_ word: String) -> [UITextField] {
+    func createTextFields(_ advice: String) -> [UITextField] {
         
-        memorizeTheWord(word)
+        let words = splitWords(advice)
+        memorizeTheWord(words)
+        memorizeAdvice(words)
+        
         var textFields = [UITextField]()
         
         for i in 0...gameWord.count-1 {
