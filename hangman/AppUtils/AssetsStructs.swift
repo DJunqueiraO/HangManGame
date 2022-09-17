@@ -33,5 +33,7 @@ struct App {
         static let line_4 = UIImage(named: "line - 4")
         static let line_5 = UIImage(named: "line - 5")
         static let line_6 = UIImage(named: "line - 6")
+        static let trollFace = UIImage(named: "TrollFace")
+        static let playAgain = UIImage(named: "PlayAgain")
     }
 }

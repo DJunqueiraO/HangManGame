@@ -9,6 +9,8 @@ import UIKit
 
 class ViewModel {
     
+    private let sessionmanager = SessionManager()
+    
     var delegate: ViewModelDelegate?
     var gameWord = ""
     var advice: String = ""
@@ -48,15 +50,17 @@ class ViewModel {
     
     private func memorizeAdvice(_ words: [String]) {
         
+        advice = ""
+        
         for word in words {
             
             if word == gameWord {
                 
-                self.advice.append("? ")
+                advice.append("? ")
                 
                 continue
             }
-            self.advice.append(word + " ")
+            advice.append(word + " ")
         }
     }
     
@@ -65,6 +69,16 @@ class ViewModel {
         let randomWordIndex = Int.random(in: 0...words.count-1)
         
         gameWord = words[randomWordIndex]
+    }
+    
+    func playerWin(_ hangmanStackView: UIStackView) {
+        
+        for arrangedSubview in hangmanStackView.arrangedSubviews {
+            
+            guard let textField = arrangedSubview as? UITextField else {return}
+            if textField.text == "" {return}
+        }
+        delegate?.displayResult(App.Images.trollFace, "You Win")
     }
     
     func verifyTextField(_ sender: UITextField) {
@@ -123,8 +137,30 @@ class ViewModel {
             default:
             
                 imageView.image = App.Images.game
-                delegate?.youLose()
+                delegate?.displayResult(App.Images.skull, "You Lose")
         }
+    }
+    
+    func initializeGame(_ hangmanStackView: UIStackView) {
+        
+        sessionmanager.APIFullRequest{response in
+            
+            hangmanStackView.removeArrangedSubviews()
+            hangmanStackView.addArrangedSubviews(self.createTextFields(response.slip.advice))
+            self.delegate?.setAdviceLabel(self.advice)
+        }
+    }
+    
+    func createLabel(attributedText: NSAttributedString? = nil) -> UILabel {
+        
+        let label = UILabel()
+        if let attributedText = attributedText {label.attributedText = attributedText}
+        label.font = App.font
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .white
+        
+        return label
     }
         
     func createTextFields(_ advice: String) -> [UITextField] {
@@ -143,15 +179,11 @@ class ViewModel {
             textField.tag = i
             delegate?.setTxtFieldsTarget(textField)
             
-            let label = UILabel()
+            let attributedText = NSMutableAttributedString(string: "_",
+                                                           attributes: [.font: textField.font as Any,
+                                                                        .foregroundColor: textField.textColor as Any])
             
-            let text = "_"
-
-            let attributes = [AttributedRange(attributes: [.font: textField.font as Any,
-                                                           .foregroundColor: textField.textColor as Any],
-                                              range: text)]
-
-            label.addAttributedText(text: text, attributes)
+            let label = createLabel(attributedText: attributedText)
             
             textField.addSubview(label)
             
@@ -168,8 +200,7 @@ class ViewModel {
 protocol ViewModelDelegate {
     
     func setTxtFieldsTarget(_ textField: UITextField)
-    
     func setHangmanImage()
-    
-    func youLose()
+    func displayResult(_ image: UIImage?,_ text: String)
+    func setAdviceLabel(_ advice: String)
 }
