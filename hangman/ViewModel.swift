@@ -150,18 +150,6 @@ class ViewModel {
             self.delegate?.setAdviceLabel(self.advice)
         }
     }
-    
-    func createLabel(attributedText: NSAttributedString? = nil) -> UILabel {
-        
-        let label = UILabel()
-        if let attributedText = attributedText {label.attributedText = attributedText}
-        label.font = App.font
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = .white
-        
-        return label
-    }
         
     func createTextFields(_ advice: String) -> [UITextField] {
         
@@ -183,7 +171,7 @@ class ViewModel {
                                                            attributes: [.font: textField.font as Any,
                                                                         .foregroundColor: textField.textColor as Any])
             
-            let label = createLabel(attributedText: attributedText)
+            let label = Label(attributedText: attributedText)
             
             textField.addSubview(label)
             

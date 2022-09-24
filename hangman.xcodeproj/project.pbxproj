@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		149E592028DFB9C300AEC236 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149E591F28DFB9C300AEC236 /* Label.swift */; };
 		14ED190B28C7F533001CD3C0 /* OrientationEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14ED190A28C7F533001CD3C0 /* OrientationEnum.swift */; };
 		14FDD06528C6A061000D4E8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FDD06428C6A061000D4E8F /* AppDelegate.swift */; };
 		14FDD06728C6A061000D4E8F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FDD06628C6A061000D4E8F /* SceneDelegate.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		149E591F28DFB9C300AEC236 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		14ED190A28C7F533001CD3C0 /* OrientationEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationEnum.swift; sourceTree = "<group>"; };
 		14FDD06128C6A061000D4E8F /* hangman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hangman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14FDD06428C6A061000D4E8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				14FDD07E28C6A552000D4E8F /* UIViewExtension.swift */,
 				14FDD08728C6C377000D4E8F /* UIStackViewExtension.swift */,
 				14FDD08528C6AE78000D4E8F /* UITextFieldExtension.swift */,
+				149E591F28DFB9C300AEC236 /* Label.swift */,
 			);
 			path = AppUtils;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 				14FDD06528C6A061000D4E8F /* AppDelegate.swift in Sources */,
 				14ED190B28C7F533001CD3C0 /* OrientationEnum.swift in Sources */,
 				14FDD08428C6A8B2000D4E8F /* APIModel.swift in Sources */,
+				149E592028DFB9C300AEC236 /* Label.swift in Sources */,
 				14FDD06728C6A061000D4E8F /* SceneDelegate.swift in Sources */,
 				14FDD07B28C6A295000D4E8F /* AssetsStructs.swift in Sources */,
 				14FDD08628C6AE78000D4E8F /* UITextFieldExtension.swift in Sources */,

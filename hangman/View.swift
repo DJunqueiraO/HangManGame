@@ -9,70 +9,34 @@ import UIKit
 
 class View: UIViewController {
     
-//    private let sessionmanager = SessionManager()
+    struct ViewElements {
         
-    private lazy var hangmanStackView: UIStackView = {
+        let hangmanStackView: UIStackView,
+            gameTitleLabel: UILabel,
+            adviceLabel: UILabel,
+            chooseALetter: UILabel,
+            hangmanImage: UIImageView,
+            youLoseLabel: UILabel,
+            youLoseImageView: UIImageView,
+            playAgainButton: UIButton
+    }
+        
+    private lazy var viewElements: ViewElements = {
         
         let hangmanStackView = UIStackView()
         hangmanStackView.spacing = 5
         
-        return hangmanStackView
-    }()
-    
-    private lazy var gameTitleLabel: UILabel = {
+        let gameTitleLabel = Label(attributedText: NSMutableAttributedString(string: "Hangman game", attributes: [.font: App.font as Any, .foregroundColor: UIColor.white]))
         
-        let attributedText = NSMutableAttributedString(string: "Hangman game",
-                                                       attributes: [.font: App.font as Any,
-                                                                    .foregroundColor: UIColor.white])
+        let adviceLabel = Label()
         
-        let gameTitleLabel = viewModel.createLabel(attributedText: attributedText)
+        let chooseALetter = Label(attributedText: NSMutableAttributedString(string: "Choose a letter", attributes: [.font: App.font as Any, .foregroundColor: UIColor.white]))
         
-        return gameTitleLabel
-    }()
-    
-    private lazy var adviceLabel: UILabel = {
+        let hangmanImage = UIImageView()
+        hangmanImage.image = App.Images.game_1
+        hangmanImage.contentMode = .scaleAspectFit
         
-        let adviceLabel = viewModel.createLabel()
-        
-        return adviceLabel
-    }()
-    
-    private lazy var chooseALetter: UILabel = {
-        
-        let attributedText = NSMutableAttributedString(string: "Choose a letter",
-                                                       attributes: [.font: App.font as Any,
-                                                                    .foregroundColor: UIColor.white])
-        
-        let chooseALetter = viewModel.createLabel(attributedText: attributedText)
-        
-        return chooseALetter
-    }()
-        
-    private let hangmanImage: UIImageView = {
-        
-        let hangman = UIImageView()
-        hangman.image = App.Images.game_1
-        hangman.contentMode = .scaleAspectFit
-        
-        return hangman
-    }()
-    
-    private lazy var viewModel: ViewModel = {
-        
-        let viewModel = ViewModel()
-        viewModel.delegate = self
-        
-        return viewModel
-    }()
-    
-    private lazy var youLoseLabel: UILabel = {
-        
-        let youLoseLabel = viewModel.createLabel()
-        
-        return youLoseLabel
-    }()
-    
-    private lazy var youLoseImageView: UIImageView = {
+        let youLoseLabel = Label()
         
         let youLoseImageView = UIImageView()
         youLoseImageView.contentMode = .scaleAspectFit
@@ -84,11 +48,6 @@ class View: UIViewController {
         youLoseLabel.constraint(to: youLoseImageView, by: [.centerX])
         youLoseLabel.constraint(to: youLoseImageView, by: [.centerY], view.frame.size.height*0.25)
         
-        return youLoseImageView
-    }()
-    
-    private lazy var playAgainButton: UIButton = {
-        
         let playAgainButton = UIButton()
         playAgainButton.alpha = 0
         playAgainButton.setImage(App.Images.playAgain, for: .normal)
@@ -96,59 +55,70 @@ class View: UIViewController {
                                   for: .touchUpInside)
         playAgainButton.imageView?.contentMode = .scaleAspectFit
         
-        return playAgainButton
+        return ViewElements(hangmanStackView: hangmanStackView,
+                            gameTitleLabel: gameTitleLabel,
+                            adviceLabel: adviceLabel,
+                            chooseALetter: chooseALetter,
+                            hangmanImage: hangmanImage,
+                            youLoseLabel: youLoseLabel,
+                            youLoseImageView: youLoseImageView,
+                            playAgainButton: playAgainButton)
+    }()
+    
+    private lazy var viewModel: ViewModel = {
+        
+        let viewModel = ViewModel()
+        viewModel.delegate = self
+        
+        return viewModel
     }()
 
     override func viewDidLoad() {
         
-        view.addSubviews([hangmanImage, hangmanStackView, adviceLabel, gameTitleLabel, chooseALetter, youLoseImageView, playAgainButton])
+        view.addSubviews([viewElements.hangmanImage, viewElements.hangmanStackView, viewElements.adviceLabel, viewElements.gameTitleLabel, viewElements.chooseALetter, viewElements.youLoseImageView, viewElements.playAgainButton])
         view.backgroundColor = App.green
         
-        viewModel.initializeGame(hangmanStackView)
+        viewModel.initializeGame(viewElements.hangmanStackView)
         
         super.viewDidLoad()
         
-        gameTitleLabel.constraint(to: hangmanImage, by: [.centerX, .top])
+        viewElements.gameTitleLabel.constraint(to: viewElements.hangmanImage, by: [.centerX, .top])
         
-        hangmanImage.constraint(to: view.safeAreaLayoutGuide, by: [.top, .leading, .trailing])
-        hangmanImage.constraint(to: view.keyboardLayoutGuide, with: [.bottom: .top])
+        viewElements.hangmanImage.constraint(to: view.safeAreaLayoutGuide, by: [.top, .leading, .trailing])
+        viewElements.hangmanImage.constraint(to: view.keyboardLayoutGuide, with: [.bottom: .top])
         
-        hangmanStackView.constraint(to: hangmanImage, by: [.centerX], view.frame.size.width*0.1)
-        hangmanStackView.constraint(to: hangmanImage, by: [.centerY], view.frame.size.height*0.15)
+        viewElements.hangmanStackView.constraint(to: viewElements.hangmanImage, by: [.centerX], view.frame.size.width*0.1)
+        viewElements.hangmanStackView.constraint(to: viewElements.hangmanImage, by: [.centerY], view.frame.size.height*0.15)
         
-        adviceLabel.constraint(to: chooseALetter, with: [.bottom:.top], -view.frame.size.height/20)
-        adviceLabel.constraint(to: hangmanImage, by: [.leading, .trailing])
+        viewElements.adviceLabel.constraint(to: viewElements.chooseALetter, with: [.bottom:.top], -view.frame.size.height/20)
+        viewElements.adviceLabel.constraint(to: viewElements.hangmanImage, by: [.leading, .trailing])
         
-        chooseALetter.constraint(to: hangmanImage, by: [.leading, .trailing, .bottom])
+        viewElements.chooseALetter.constraint(to: viewElements.hangmanImage, by: [.leading, .trailing, .bottom])
         
-        playAgainButton.constraint(to: view.safeAreaLayoutGuide,
-                                   by: [.leading,.trailing,.bottom])
-        playAgainButton.constraint(to: youLoseImageView, by: [.height], multiplier: 0.1)
+        viewElements.playAgainButton.constraint(to: view.safeAreaLayoutGuide, by: [.leading,.trailing,.bottom])
+        viewElements.playAgainButton.constraint(to: viewElements.youLoseImageView, by: [.height], multiplier: 0.1)
         
-        youLoseImageView.constraint(to: view, by: [.top, .leading, .trailing, .bottom])
+        viewElements.youLoseImageView.constraint(to: view, by: [.top, .leading, .trailing, .bottom])
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        
-        .lightContent
-    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {.lightContent}
     
-    @objc func textFieldsTarget(_ sender: UITextField) {
+    @objc private func textFieldsTarget(_ sender: UITextField) {
         
         viewModel.verifyTextField(sender)
-        viewModel.playerWin(hangmanStackView)
+        viewModel.playerWin(viewElements.hangmanStackView)
     }
     
-    @objc func playAgainTarget(_ sender: UIButton) {
+    @objc private func playAgainTarget(_ sender: UIButton) {
         
         UIView.animate(withDuration: 0.3,
                        delay: 0.1) {
             
             sender.alpha = 0
-            self.youLoseImageView.alpha = 0
+            self.viewElements.youLoseImageView.alpha = 0
         }
-        viewModel.initializeGame(hangmanStackView)
-        hangmanImage.image = App.Images.game_1
+        viewModel.initializeGame(viewElements.hangmanStackView)
+        viewElements.hangmanImage.image = App.Images.game_1
     }
 }
 
@@ -161,7 +131,7 @@ extension View: ViewModelDelegate {
     
     func setHangmanImage() {
         
-        viewModel.updateRangmanImage(hangmanImage)
+        viewModel.updateRangmanImage(viewElements.hangmanImage)
     }
     
     func displayResult(_ image: UIImage?,_ text: String) {
@@ -169,22 +139,22 @@ extension View: ViewModelDelegate {
         let attributedText = NSMutableAttributedString(string: text,
                                                        attributes: [.font: App.font as Any,
                                                                     .foregroundColor: UIColor.white])
-        youLoseLabel.attributedText = attributedText
+        viewElements.youLoseLabel.attributedText = attributedText
         
         view.endEditing(true)
         
-        youLoseImageView.image = image
+        viewElements.youLoseImageView.image = image
         
         UIView.animate(withDuration: 0.3,
                        delay: 0.1) {
             
-            self.youLoseImageView.alpha = 1
-            self.playAgainButton.alpha = 1
+            self.viewElements.youLoseImageView.alpha = 1
+            self.viewElements.playAgainButton.alpha = 1
         }
     }
     
     func setAdviceLabel(_ advice: String) {
         
-        adviceLabel.text = advice
+        viewElements.adviceLabel.text = advice
     }
 }
